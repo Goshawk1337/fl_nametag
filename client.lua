@@ -30,7 +30,6 @@ end)
 
 function playerStreamer()
 	while namesVisible do
-		local adminPanel <const> = GetResourceState(ADMINPANEL_SCRIPT) == "started"
 		streamedPlayers = {}
 		localPed = PlayerPedId()
 
@@ -48,22 +47,18 @@ function playerStreamer()
 
 						local serverId <const> = tonumber(GetPlayerServerId(player))
 						if serverId and distance <= STREAM_DISTANCE and playerNames[serverId] then
-							local adminDuty = adminPanel and exports[ADMINPANEL_SCRIPT]:isPlayerInAdminduty(serverId)
 
-							local label = (playerNames[serverId] or "")
-							if adminDuty then
-								local adminLabel <const> = adminPanel and exports[ADMINPANEL_SCRIPT]:getPlayerAdminLabel(serverId) or 'Admin'
-								label = GetPlayerName(player) .. ' <font color="' .. ADMIN_COLOR .. '">(' .. adminLabel .. ')</font>'
-							end
-							label = label .. " (" .. serverId .. ")"
+							local label = (playerNames[serverId].name or "")
+							
+							label = label .. " [" .. serverId .. "]"
+							if playerNames[serverId].vip then
+								label =  " ~h~ ~o~[" .. playerNames[serverId].vip .. "] ~w~" .. label 
+							end	
 
 							streamedPlayers[serverId] = {
 								playerId = player,
 								ped = playerPed,
 								label = label,
-								newbie = isNewbie(serverId),
-								talking = MumbleIsPlayerTalking(player) or NetworkIsPlayerTalking(player),
-								adminDuty = adminDuty
 							}
 						end
 					end
@@ -99,39 +94,11 @@ function drawNames()
 
 				DrawText3D(coords, {
 					{ text = playerData.label, color = { 255, 255, 255 } },
-					newbieVisible and {
-						text = NEWBIE_TEXT,
-						pos = { 0, -0.017 },
-						color = { 255, 150, 0 },
-						scale = 0.25,
-					} or nil,
-					playerData.talking and {
-						text = SPEAK_ICON,
-						pos = { 0, 0.025 },
-						scale = 0.4,
-					} or nil,
-				}, scale, 200 * scale)
+					nil,
+					nil,
+				}, scale, 255)
 
-				if ADMINLOGO.visible and playerData.adminDuty then 
-					DrawMarker(
-						43,
-						coords + vector3(0, 0, 0.15),
-						vector3(0, 0, 0),
-						vector3(89.9, 180, 0),
-						vector3(scale * ADMINLOGO.size, scale * ADMINLOGO.size, 0),
-						255,
-						255,
-						255,
-						255,
-						false, --up-down anim
-						true, --face cam
-						0,
-						ADMINLOGO.rotate, --rotate
-						"adminsystem",
-						"logo",
-						false --[[drawon ents]]
-					)
-				end
+				
 			end
 		end
 
@@ -141,9 +108,6 @@ function drawNames()
 	nameThread = false
 end
 
-function isNewbie(serverId)
-	return (newbiePlayers[serverId] or 0) + NEWBIE_TIME > GetCloudTimeAsInt()
-end
 
 function setMyNameVisible(state)
 	myName = state

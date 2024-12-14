@@ -1,21 +1,21 @@
 STREAM_DISTANCE = 40
 
-NEWBIE_TIME = 60 * 60 --Seconds / Másodpercek
-NEWBIE_TEXT = "** Új a városban **"
+-- NEWBIE_TIME = 60 * 60 --Seconds / Másodpercek
+-- NEWBIE_TEXT = "** Új a városban **"
 
 SPEAK_ICON = "🔊"
 
-ADMIN_RANKS = { --permission groups for /changename command
-	["admin"] = true,
-}
+-- ADMIN_RANKS = { --permission groups for /changename command
+-- 	["admin"] = true,
+-- }
 
-ADMINPANEL_SCRIPT = 'fl_adminpanel'
-ADMIN_COLOR = "#7cc576"
-ADMINLOGO = {
-	visible = true,
-	rotate = false,
-	size = 0.3
-}
+-- ADMINPANEL_SCRIPT = 'fl_adminpanel'
+-- ADMIN_COLOR = "#7cc576"
+-- ADMINLOGO = {
+-- 	visible = true,
+-- 	rotate = false,
+-- 	size = 0.3
+-- }
 
 function output(text, target)
 	if IsDuplicityVersion() then --Server Side

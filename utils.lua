@@ -16,6 +16,8 @@ function DrawText3D(coords, texts, scale, alpha)
 		SetTextColour(r, g, b, math.floor(alpha))
 		SetTextOutline()
 		SetTextCentre(1)
+
+		SetTextFont(0)
 		BeginTextCommandDisplayText("STRING")
 		AddTextComponentString(text.text)
 
