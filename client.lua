@@ -51,8 +51,11 @@ function playerStreamer()
 							local label = (playerNames[serverId].name or "")
 							
 							label = label .. " [" .. serverId .. "]"
-							if playerNames[serverId].vip then
-								label =  " ~h~ ~o~[" .. playerNames[serverId].vip .. "] ~w~" .. label 
+							if playerNames[serverId].vip ~= nil then
+								label =  " ~h~ ~o~[" .. playerNames[serverId].vip .. "] ~w~" .. label
+							else
+								label =   label
+
 							end	
 
 							streamedPlayers[serverId] = {

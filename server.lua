@@ -6,7 +6,12 @@ CreateThread(function()
 		local xPlayer = ESX.GetPlayerFromId(player)
 		if xPlayer then
 			local vip = exports.fz_dashboard:getVip(xPlayer)
-			playerNames[tonumber(player)] = {name = xPlayer.getName(), vip = vip.title}
+			if vip ~= nil then 	
+				playerNames[tonumber(player)] = {name = xPlayer.getName(), vip = vip.title}
+			else
+				playerNames[tonumber(player)] = {name = xPlayer.getName(), vip = nil}
+
+			end
 		end
 	end
 end)
@@ -25,8 +30,12 @@ end)
 RegisterNetEvent("requestPlayerNames", function()
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local vip = exports.fz_dashboard:getVip(xPlayer)
-	playerNames[source] = {name = xPlayer.getName(), vip = vip.title}
-	
+	if vip ~= nil then 	
+		playerNames[source] = {name = xPlayer.getName(), vip = vip.title}
+	else
+		playerNames[source] = {name = xPlayer.getName(), vip = nil}
+
+	end
 
 	TriggerClientEvent("receivePlayerNames", -1, playerNames, joinTimes)
 end)
@@ -36,7 +45,12 @@ CreateThread(function()
 
 	for _, xPlayer in pairs(ESX.GetExtendedPlayers()) do
 		local vip = exports.fz_dashboard:getVip(xPlayer)
-		playerNames[xPlayer.source] = {name = xPlayer.getName(), vip = vip.title}
+		if vip ~= nil then 	
+			playerNames[xPlayer.source] = {name = xPlayer.getName(), vip = vip.title}
+		else
+			playerNames[xPlayer.source] = {name = xPlayer.getName(), vip = nil}
+
+		end
 
 
 	end
@@ -46,7 +60,12 @@ end)
 
 AddEventHandler("esx:playerLoaded", function(player, xPlayer)
 	local vip = exports.fz_dashboard:getVip(xPlayer)
-	playerNames[player] = {name = xPlayer.getName(), vip = vip.title}
+	if vip ~= nil then 	
+		playerNames[player] = {name = xPlayer.getName(), vip = vip.title}
+	else
+		playerNames[player] = {name = xPlayer.getName(), vip = nil}
+
+	end
 
 	TriggerClientEvent("receivePlayerNames", -1, playerNames, joinTimes)
 end)

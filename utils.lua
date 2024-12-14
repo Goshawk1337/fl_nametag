@@ -13,7 +13,9 @@ function DrawText3D(coords, texts, scale, alpha)
 		b = b or 255
 
 		SetTextWrap(0.0, 1.0)
-		SetTextColour(r, g, b, math.floor(alpha))
+		SetTextColour(255, 255, 255, 255)
+		SetTextDropshadow(0, 0, 0, 0, 255)
+		SetTextDropShadow()
 		SetTextOutline()
 		SetTextCentre(1)
 
